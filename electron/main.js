@@ -5,7 +5,6 @@ const { channels } = require('../src/shared/constants');
 
 let mainWindow;
 
-//TODO: Update menu bar to remove dev options
 function createWindow () {
   const startUrl = process.env.ELECTRON_START_URL || url.format({
     pathname: path.join(__dirname, '../index.html'),
