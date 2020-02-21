@@ -1,2 +1,0 @@
-(this.webpackJsonpnetassess=this.webpackJsonpnetassess||[]).push([[0],{3:function(e,n,t){e.exports=t(9)},8:function(e,n,t){},9:function(e,n,t){"use strict";t.r(n);var s=t(0),a=t.n(s),r=t(2),c=t.n(r);t(8);var l=function(){return a.a.createElement("div",{className:"App"},a.a.createElement("p",null,"Hello "))};c.a.render(a.a.createElement(l,null),document.getElementById("root"))}},[[3,1,2]]]);
-//# sourceMappingURL=main.fe0f928f.chunk.js.map
