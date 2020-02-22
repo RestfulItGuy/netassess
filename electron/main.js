@@ -2,6 +2,8 @@ const { app, BrowserWindow, ipcMain, Menu } = require('electron');
 const path = require('path');
 const url = require('url');
 const { channels } = require('../src/shared/constants');
+const { autoUpdater } = require('electron-updater');
+
 
 let mainWindow;
 
@@ -22,6 +24,9 @@ function createWindow () {
   mainWindow.loadURL(startUrl);
   mainWindow.on('closed', function () {
     mainWindow = null;
+  });
+  mainWindow.once('ready-to-show', () => {
+    autoUpdater.checkForUpdatesAndNotify();
   });
   Menu.setApplicationMenu(null);
 }
@@ -45,4 +50,14 @@ ipcMain.on(channels.APP_INFO, (event) => {
     appName: app.getName(),
     appVersion: app.getVersion(),
   });
+});
+
+autoUpdater.on('update-available', () => {
+  mainWindow.webContents.send('update_available');
+});
+autoUpdater.on('update-downloaded', () => {
+  mainWindow.webContents.send('update_downloaded');
+});
+ipcMain.on('restart_app', () => {
+  autoUpdater.quitAndInstall();
 });
