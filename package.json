@@ -1,17 +1,18 @@
 {
   "name": "netassess",
   "packageName": "TICC",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "private": true,
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/RestfulItGuy/netassess.git"
+    "type": "git",
+    "url": "https://github.com/RestfulItGuy/netassess.git"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "dotenv": "^8.2.0",
+    "electron-updater": "^4.2.2",
     "firebase": "^7.6.1",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
