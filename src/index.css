@@ -8,11 +8,34 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
 .titleContainer{
   text-align: center;
+}
+
+.title{}
+
+.subtitle{
+  color: #999;
+  font-weight: lighter;
+}
+
+.loginForm{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.textInput{
+  margin-bottom: 10px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-radius: 5px;
+}
+
+.submitButton{
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  width: 100%;
 }
