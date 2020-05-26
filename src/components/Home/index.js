@@ -2,8 +2,7 @@ import React from 'react'
 import { withAuthorization } from '../Session';
 import { withFirebase } from '../Firebase';
 import DocumentUpload from '../DocumentUpload';
-import Loader from 'react-loader-spinner'
-let urlArray = []
+import Loader from 'react-loader-spinner';
 
 class Home extends React.Component {
   constructor(props) {
@@ -33,31 +32,12 @@ class Home extends React.Component {
           docs.push({ ...doc.data(), uid: doc.id }),
         )
         this.setState({ docs, loading: false })
-        // this.setState({ loading: false })  
       })
-    // this.getData();
   }
 
   componentWillUnmount() {
     this.unsubscribe();
   }
-
-  // getData = () => {
-  //   var itemArray = []
-  //   var listRef = this.props.firebase.storage.ref();
-  //   listRef.child('docs').listAll().then(function (res) {
-  //     res.items.forEach(function (itemRef) {
-  //       itemArray.push(itemRef.name)
-  //     });
-  //   }).then(() => {
-  //     itemArray.forEach(item => {
-  //       listRef.child('docs/' + item).getDownloadURL().then(url => {
-  //         urlArray.push([item, url])
-  //         this.setState({ loading: false })
-  //       })
-  //     })
-  //   })
-  // }
 
   render() {
     return (
@@ -75,11 +55,8 @@ class Home extends React.Component {
             <ul id="docsList">
               {
                 this.state.docs.map(item => (
-                  <li key={item.uid}>{item.name}</li>
+                  <li key={item.uid}><a href={item.url}>{item.name}</a></li>
                 ))
-                // urlArray.map(item => (
-                //   <li key={item[0]}><a href={item[1]}>{item[0]}</a></li>
-                // ))
               }
             </ul>
           </>

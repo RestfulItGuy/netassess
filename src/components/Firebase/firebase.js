@@ -25,7 +25,7 @@ class Firebase {
     this.storageRef = this.storage.ref()
   }
 
-  docs_firestore = () => this.firestore.collection('docs');
+  docs_firestore = () => this.firestore.collection('docs')
 
   //USER API FUNCTOIN (FIRESTORE)
   users_firestore = () => this.firestore.collection('users');
@@ -59,36 +59,16 @@ class Firebase {
   }
 
   uploadFile = filedata => {
-    const promises = [];
-    const name = filedata.name;
-    const uploadTask = this.storage.ref(`docs/${filedata.name}`).put(filedata);
-    promises.push(uploadTask);
-
-    uploadTask.on(
-      'state_changed',
-      null,
-      null,
+    const docs_firestore = this.firestore.collection('docs');
+    const uploadTask = this.storage.ref().child(`docs/` + filedata.name).put(filedata);
+    uploadTask.on(app.storage.TaskEvent.STATE_CHANGED,
+      null, null,
       function () {
-        uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
-          this.docs_firestore().doc(name).set({ name: name, url: downloadURL })
+        uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+          docs_firestore.add({ name: filedata.name, url: downloadURL })
         });
       }
     )
-  }
-
-  getDocList = () => {
-    let docsArray = []
-    // let docsRef = app.firestore().collection('docs');
-    this.docs_firestore().get()
-      .then(snapshot => {
-        snapshot.forEach(doc => {
-          docsArray.push([doc.data().name, doc.data().url])
-        });
-      })
-      .catch(err => {
-        console.log('Error getting documents', err);
-      });
-    return docsArray;
   }
 }
 

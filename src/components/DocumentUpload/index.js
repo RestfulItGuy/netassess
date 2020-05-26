@@ -69,7 +69,6 @@ class DocumentUpload extends Component {
     }
     const file = this.file.files[0]
     this.setState({ filedata: file })
-    // this.props.firebase.uploadFile(file)
   }
 
   getTextData = () => {
@@ -79,7 +78,6 @@ class DocumentUpload extends Component {
 
   uploadFile = () => {
     this.props.firebase.uploadFile(this.state.filedata)
-    //fetch data after upload completes
   }
 
   render() {
@@ -89,7 +87,7 @@ class DocumentUpload extends Component {
         <form>
           <input type="file" id="upload" onChange={this.extractFileName} ref={this.setRef} /><br />
           <textarea placeholder="Notes" id="notes" onChange={this.getTextData}></textarea><br />
-          <button onClick={this.uploadFile}>Upload</button>
+          <button type="button" onClick={this.uploadFile}>Upload</button>
         </form>
         <span>{this.state.error}</span>
       </>
