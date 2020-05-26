@@ -65,7 +65,6 @@ class Firebase {
       null, null,
       function () {
         uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
-          //docs_firestore.add({ name: filedata.name, url: downloadURL, notes: meta })
           docs_firestore.doc(filedata.name).set({ name: filedata.name, url: downloadURL, notes: meta })
         });
       }
