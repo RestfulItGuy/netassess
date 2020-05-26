@@ -18,6 +18,7 @@ class DocumentUpload extends Component {
   }
 
   extractFileName = () => {
+    // TODO: check for spelling mistakes?
     var re = /^[A-Za-z]+$/;
     var num_re = /^[0-9]+$/;
     var fullPath = document.getElementById("upload").value;
