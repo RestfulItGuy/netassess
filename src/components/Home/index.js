@@ -12,7 +12,8 @@ class Home extends React.Component {
       uid: '',
       role: '',
       username: '',
-      loading: true
+      loading: true,
+      docs: []
     }
   }
 
@@ -24,25 +25,39 @@ class Home extends React.Component {
       this.setState({ role: vals.role })
       this.setState({ username: vals.username })
     })
-    this.getData();
+    this.unsubscribe = this.props.firebase
+      .docs_firestore()
+      .onSnapshot(snapshot => {
+        let docs = [];
+        snapshot.forEach(doc =>
+          docs.push({ ...doc.data(), uid: doc.id }),
+        )
+        this.setState({ docs, loading: false })
+        // this.setState({ loading: false })  
+      })
+    // this.getData();
   }
 
-  getData = () => {
-    var itemArray = []
-    var listRef = this.props.firebase.storage.ref();
-    listRef.child('docs').listAll().then(function (res) {
-      res.items.forEach(function (itemRef) {
-        itemArray.push(itemRef.name)
-      });
-    }).then(() => {
-      itemArray.forEach(item => {
-        listRef.child('docs/' + item).getDownloadURL().then(url => {
-          urlArray.push([item, url])
-          this.setState({ loading: false })
-        })
-      })
-    })
+  componentWillUnmount() {
+    this.unsubscribe();
   }
+
+  // getData = () => {
+  //   var itemArray = []
+  //   var listRef = this.props.firebase.storage.ref();
+  //   listRef.child('docs').listAll().then(function (res) {
+  //     res.items.forEach(function (itemRef) {
+  //       itemArray.push(itemRef.name)
+  //     });
+  //   }).then(() => {
+  //     itemArray.forEach(item => {
+  //       listRef.child('docs/' + item).getDownloadURL().then(url => {
+  //         urlArray.push([item, url])
+  //         this.setState({ loading: false })
+  //       })
+  //     })
+  //   })
+  // }
 
   render() {
     return (
@@ -59,9 +74,12 @@ class Home extends React.Component {
             <DocumentUpload uid={this.state.uid} />
             <ul id="docsList">
               {
-                urlArray.map(item => (
-                  <li key={item[0]}><a href={item[1]}>{item[0]}</a></li>
+                this.state.docs.map(item => (
+                  <li key={item.uid}>{item.name}</li>
                 ))
+                // urlArray.map(item => (
+                //   <li key={item[0]}><a href={item[1]}>{item[0]}</a></li>
+                // ))
               }
             </ul>
           </>

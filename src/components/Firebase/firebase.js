@@ -25,6 +25,8 @@ class Firebase {
     this.storageRef = this.storage.ref()
   }
 
+  docs_firestore = () => this.firestore.collection('docs');
+
   //USER API FUNCTOIN (FIRESTORE)
   users_firestore = () => this.firestore.collection('users');
   user_firestore = uid => this.firestore.collection('users').doc(uid).get().then(function (doc) {
@@ -68,7 +70,7 @@ class Firebase {
       null,
       function () {
         uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
-          app.firestore().collection(`docs`).doc(name).set({ name: name, url: downloadURL })
+          this.docs_firestore().doc(name).set({ name: name, url: downloadURL })
         });
       }
     )
@@ -76,8 +78,8 @@ class Firebase {
 
   getDocList = () => {
     let docsArray = []
-    let docsRef = app.firestore().collection('docs');
-    docsRef.get()
+    // let docsRef = app.firestore().collection('docs');
+    this.docs_firestore().get()
       .then(snapshot => {
         snapshot.forEach(doc => {
           docsArray.push([doc.data().name, doc.data().url])
