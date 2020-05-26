@@ -12,8 +12,6 @@ body {
   text-align: center;
 }
 
-.title{}
-
 .subtitle{
   color: #999;
   font-weight: lighter;
@@ -34,8 +32,9 @@ body {
 }
 
 .submitButton{
+
   position: absolute;
+  top: 100%;
   left: 50%;
-  transform: translate(-50%);
-  width: 100%;
+  transform: translate(-50%, -50%);
 }

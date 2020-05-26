@@ -6,10 +6,15 @@ import * as serviceWorker from './serviceWorker';
 
 import App from './components/App';
 import Firebase, { FirebaseContext } from './components/Firebase';
+import { UserProvider } from './components/context/UserContext';
+
+import "../node_modules/react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 
 ReactDOM.render(
   <FirebaseContext.Provider value={new Firebase()}>
-    <App />
+    <UserProvider>
+      <App />
+    </UserProvider>
   </FirebaseContext.Provider>,
   document.getElementById('root'),
 );

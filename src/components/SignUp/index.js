@@ -21,43 +21,43 @@ const SignUpPage = () => (
   </div>
 );
 
-class SignUpFormBase extends Component{
-  constructor(props){
+class SignUpFormBase extends Component {
+  constructor(props) {
     super(props);
-    this.state = {...INITAL_STATE}
+    this.state = { ...INITAL_STATE }
   }
 
   /* TODO: Only create user auth once user has been added to DB. Possible bug: User info blank
      while user login successful. */
   onSubmit = event => {
-    const {username, email, passwordOne } = this.state; //Get the values from state
+    const { username, email, passwordOne } = this.state; //Get the values from state
     this.props.firebase
       //Creates email/pass authentication combo
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
         //Adds other user info to a database
         return this.props.firebase
-        .user_firestore(authUser.user.uid)
-        .set({
-          username,
-          email
-        });
+          .user_firestore(authUser.user.uid)
+          .set({
+            username,
+            email
+          });
       })
       .then(() => {
-        this.setState({...INITAL_STATE}) //Reset state
-        this.props.history.push(ROUTES.HOME);
+        this.setState({ ...INITAL_STATE }) //Reset state
+        this.props.history.push(ROUTES.PROFILE);
       })
       .catch(error => {
-        this.setState({error});
+        this.setState({ error });
       })
     event.preventDefault();
   }
 
   onChange = event => {
-    this.setState({[event.target.name]: event.target.value});
+    this.setState({ [event.target.name]: event.target.value });
   }
 
-  render(){
+  render() {
     const {
       username,
       email,
@@ -67,13 +67,13 @@ class SignUpFormBase extends Component{
     } = this.state;
 
     //Returns true if any of the conditions are met
-    const formInvalid = 
+    const formInvalid =
       passwordOne !== passwordTwo ||
       passwordOne.length <= 2 ||
       email.length <= 2 ||
       username.length <= 2;
 
-    return(
+    return (
       <form onSubmit={this.onSubmit}>
         <input
           name="username"
@@ -121,4 +121,4 @@ const SignUpForm = compose(
 )(SignUpFormBase);
 
 export default SignUpPage;
-export {SignUpForm, SignUpLink};
+export { SignUpForm, SignUpLink };

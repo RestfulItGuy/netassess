@@ -6,7 +6,7 @@ import SignOutButton from '../SignOut';
 
 const Navigation = () => (
   <AuthUserContext.Consumer>
-    {authUser => authUser ? <NavigationAuth /> : <NavigationNonAuth />}
+    {authUser => authUser ? <NavigationAuth /> : <NavigationAuth />}
   </AuthUserContext.Consumer>
 );
 
@@ -16,9 +16,6 @@ const NavigationAuth = () =>(
     <ul>
       <li>
         <Link to={ROUTES.HOME}>Home</Link>
-      </li>
-      <li>
-        <Link to={ROUTES.ACCOUNT}>Account</Link>
       </li>
       <li>
         <Link to={ROUTES.ACCOUNT}>Account</Link>
