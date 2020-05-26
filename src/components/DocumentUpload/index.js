@@ -78,7 +78,7 @@ class DocumentUpload extends Component {
   }
 
   uploadFile = () => {
-    this.props.firebase.uploadFile(this.state.filedata)
+    this.props.firebase.uploadFile(this.state.filedata, this.state.textData)
   }
 
   render() {

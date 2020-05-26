@@ -58,14 +58,15 @@ class Firebase {
     }
   }
 
-  uploadFile = filedata => {
+  uploadFile = (filedata, meta) => {
     const docs_firestore = this.firestore.collection('docs');
     const uploadTask = this.storage.ref().child(`docs/` + filedata.name).put(filedata);
     uploadTask.on(app.storage.TaskEvent.STATE_CHANGED,
       null, null,
       function () {
         uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
-          docs_firestore.add({ name: filedata.name, url: downloadURL })
+          //docs_firestore.add({ name: filedata.name, url: downloadURL, notes: meta })
+          docs_firestore.doc(filedata.name).set({ name: filedata.name, url: downloadURL, notes: meta })
         });
       }
     )
