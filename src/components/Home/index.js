@@ -60,7 +60,7 @@ class Home extends React.Component {
             <ul id="docsList">
               {
                 this.state.docs.map(item => (
-                  <li key={item.uid}><a href={item.url}>{item.name}</a></li>
+                  <li key={item.uid}><a href={item.url}>{item.name}</a><br /><span>{item.notes}</span></li>
                 ))
               }
             </ul>
