@@ -1,14 +1,18 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { withAuthorization } from '../Session';
 import { withFirebase } from '../Firebase';
-import UserContext from '../context/UserContext';
-//import { UserConsumer } from '../context/UserContext';
+import Navigation from '../Navigation';
 
-const Account = () => {
-  const user = useContext(UserContext)
-  console.log(user)
-  return <div>{user.uid}</div>
+class Account extends React.Component {
+  render() {
+    return (
+      <div>
+        <Navigation />
+      </div>
+    )
+  }
 }
+
 
 const condition = authUser => !!authUser;
 export default withFirebase(withAuthorization(condition)(Account));

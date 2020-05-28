@@ -1,36 +1,66 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import * as ROUTES from '../../constants/routes'
-import {AuthUserContext} from '../Session';
+import * as ROUTES from '../../constants/routes';
 import SignOutButton from '../SignOut';
 
-const Navigation = () => (
-  <AuthUserContext.Consumer>
-    {authUser => authUser ? <NavigationAuth /> : <NavigationAuth />}
-  </AuthUserContext.Consumer>
-);
+class Navigation extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      admin: false
+    }
+  }
 
-const NavigationAuth = () =>(
+  componentDidMount() {
+    if (this.props.role === 'admin') {
+      this.setState({ admin: true })
+    }
+  }
+
+  render() {
+    return this.state.admin ? <NavigationAdmin /> : <NavigationNonAdmin />
+  }
+}
+
+const NavigationNonAdmin = () => (
   <>
-  <div>
-    <ul>
-      <li>
-        <Link to={ROUTES.HOME}>Home</Link>
-      </li>
-      <li>
-        <Link to={ROUTES.ACCOUNT}>Account</Link>
-      </li>
-      <li>
-        <SignOutButton/>
-      </li>
-    </ul>
-  </div>
-  <hr />
+    <div>
+      <ul>
+        <li>
+          <Link to={ROUTES.PROFILE}>Home</Link>
+        </li>
+        <li>
+          <Link to={ROUTES.ACCOUNT}>Account</Link>
+        </li>
+        <li>
+          <SignOutButton />
+        </li>
+      </ul>
+    </div>
+    <hr />
   </>
 );
 
-const NavigationNonAuth = () =>(
-<></>
+const NavigationAdmin = () => (
+  <>
+    <div>
+      <ul>
+        <li>
+          <Link to={ROUTES.PROFILE}>Home</Link>
+        </li>
+        <li>
+          <Link to={ROUTES.ACCOUNT}>Account</Link>
+        </li>
+        <li>
+          <Link to={ROUTES.ADMIN}>Admin</Link>
+        </li>
+        <li>
+          <SignOutButton />
+        </li>
+      </ul>
+    </div>
+    <hr />
+  </>
 )
 
 export default Navigation;

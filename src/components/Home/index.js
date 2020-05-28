@@ -3,6 +3,7 @@ import { withAuthorization } from '../Session';
 import { withFirebase } from '../Firebase';
 import DocumentUpload from '../DocumentUpload';
 import Loader from 'react-loader-spinner';
+import Navigation from '../Navigation';
 
 class Home extends React.Component {
   constructor(props) {
@@ -53,6 +54,7 @@ class Home extends React.Component {
             width={100}
           /> :
           <>
+            <Navigation role={this.state.role} />
             <h1>Welcome, {this.state.username}</h1>
             <DocumentUpload uid={this.state.uid} />
             <ul id="docsList">
