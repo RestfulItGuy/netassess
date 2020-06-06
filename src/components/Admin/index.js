@@ -1,72 +1,66 @@
-import React  from 'react';
+import React from 'react';
 import { withFirebase } from '../Firebase';
+import Navigation from '../Navigation';
+import Loader from 'react-loader-spinner';
+import { withAuthorization } from '../Session';
 
-class AdminPage extends React.Component{
-  constructor(props){
+class AdminPage extends React.Component {
+  constructor(props) {
     super(props);
     this.state = {
       loading: true,
-      user: null,
-      users: []
-    }    
+      uid: '',
+      username: '',
+      notif: ''
+    }
   }
 
-  componentDidMount(){
-    let users = []
-    this.props.firebase.auth.onAuthStateChanged(authUser => {
-      if(authUser){
-        this.props.firebase
-        .user_firestore(authUser.uid)
-        .onSnapshot(snapshot => {
-          this.setState({
-            user: snapshot.data(),
-            loading: false,
-            username: snapshot.data().username
-          });
-        });
-      }
-    }, error => {
-      console.log(error)
-    }).bind(this);
-
-    // Get list of all users
-    this.unsubscribe = this.props.firebase
-    .users_firestore()
-    .onSnapshot(snapshot => {
-      snapshot.forEach((doc) => {
-         users.push({
-           id: doc.id,
-           name: doc.data().username,
-           email: doc.data().email
-         })
-       })
-       this.setState({users, loading: false})
-     });
+  componentDidMount() {
+    const uid = this.props.firebase.getUserID();
+    const userInfo = this.props.firebase.user_firestore(uid);
+    this.setState({ uid: uid })
+    userInfo.then(vals => {
+      this.setState({ role: vals.role, username: vals.username })
+      this.setState({ loading: false })
+    })
   }
 
-  componentWillUnmount(){
-    this.unsubscribe();
+  componentWillUnmount() {
   }
 
-  render(){
-    const { users, loading } = this.state;
-    return(
+  updateNotif = () => {
+    this.setState({ notif: document.getElementById("notif").value })
+  }
+
+  addNotif = () => {
+    this.props.firebase.addNotif(this.state.notif, this.state.uid, this.state.urgentNotif)
+    document.getElementById("notif").value = ''
+  }
+
+  render() {
+    return (
       <>
-        <h1>Welcome: {this.state.username}</h1>
-        {loading && <div>Loading ...</div>}
-        <UserList users={users} />
+        {
+          this.state.loading ?
+            <Loader
+              type="Oval"
+              color="#00BFFF"
+              height={100}
+              width={100}
+            /> :
+            <>
+              <Navigation role={this.state.role} />
+              <form>
+                <textarea id="notif" onChange={this.updateNotif}></textarea>
+                <button onClick={this.addNotif} type="button">Add notification</button>
+              </form>
+            </>
+
+        }
       </>
     )
   }
 }
 
-const UserList = ({users}) => (
-  users.map((p) => (
-    <div key={p.id}>
-      <h1>{p.name}</h1>
-      <p>{p.email}</p>
-    </div>
-  ))
-)
-
-export default withFirebase(AdminPage)
+const condition = authUser => !!authUser;
+export default withFirebase(withAuthorization(condition)(AdminPage));

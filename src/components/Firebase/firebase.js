@@ -70,6 +70,19 @@ class Firebase {
       }
     )
   }
+
+  addNotif = (notif, user) => {
+    const notif_firestore = this.firestore.collection('notifs');
+    notif_firestore.add({ text: notif, user: user, seenBy: [] })
+  }
+
+  getNotifs = () => this.firestore.collection('notifs')
+
+  updateSeenBy = (notifId, userId) => {
+    this.firestore.collection('notifs').doc(notifId).update({
+      seenBy: app.firestore.FieldValue.arrayUnion(userId)
+    })
+  }
 }
 
 export default Firebase;

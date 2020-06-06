@@ -13,6 +13,7 @@ import Account from '../Account';
 
 import * as ROUTES from '../../constants/routes';
 import { withAuthentication } from '../Session';
+import Notifications from '../Notfications';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path={ROUTES.PROFILE} component={Profile} />
         <Route path={ROUTES.ADMIN} component={AdminPage} />
         <Route path={ROUTES.ACCOUNT} component={Account} />
+        <Route path={ROUTES.NOTIFICATIONS} component={Notifications} />
       </div>
     </Router >
   )

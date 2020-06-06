@@ -13,9 +13,7 @@ class Home extends React.Component {
       role: '',
       username: '',
       loading: true,
-      docs: [],
-      hashOne: '',
-      hashTwo: '',
+      docs: []
     }
   }
 
