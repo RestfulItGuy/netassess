@@ -1,4 +1,4 @@
-export const options = [
+export const units = [
   { value: 'ceo', label: "CEO" },
   { value: 'complianceManager', label: "Compliance Manager" },
   { value: 'trainingManager', label: "Training Manager" },
@@ -13,10 +13,4 @@ export const options = [
   { value: 'documentController', label: "Document Control" },
   { value: 'public', label: "Public" },
   { value: 'student', label: "Student" },
-]
-
-export const defaultUploadRoles = [
-  { value: 'ceo', label: "CEO" },
-  { value: 'complianceManager', label: "Compliance Manager" },
-  { value: 'adminManager', label: "Admin Manager" },
 ]

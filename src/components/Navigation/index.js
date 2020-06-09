@@ -12,9 +12,11 @@ class Navigation extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.role === 'admin') {
-      this.setState({ admin: true })
-    }
+    this.props.role.forEach(element => {
+      if (element === 'admin') {
+        this.setState({ admin: true })
+      }
+    });
   }
 
   render() {
@@ -28,9 +30,6 @@ const NavigationNonAdmin = () => (
       <ul>
         <li>
           <Link to={ROUTES.PROFILE}>Home</Link>
-        </li>
-        <li>
-          <Link to={ROUTES.ACCOUNT}>Account</Link>
         </li>
         <li>
           <SignOutButton />
@@ -47,9 +46,6 @@ const NavigationAdmin = () => (
       <ul>
         <li>
           <Link to={ROUTES.PROFILE}>Home</Link>
-        </li>
-        <li>
-          <Link to={ROUTES.ACCOUNT}>Account</Link>
         </li>
         <li>
           <Link to={ROUTES.ADMIN}>Admin</Link>

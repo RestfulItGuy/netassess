@@ -58,14 +58,18 @@ class Firebase {
     }
   }
 
-  uploadFile = (filedata, meta) => {
+  uploadFile = (filedata, meta, docRoles) => {
+    const roles = []
+    docRoles.forEach(role => {
+      roles.push(role.value)
+    });
     const docs_firestore = this.firestore.collection('docs');
     const uploadTask = this.storage.ref().child(`docs/` + filedata.name).put(filedata);
     uploadTask.on(app.storage.TaskEvent.STATE_CHANGED,
       null, null,
       function () {
         uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
-          docs_firestore.doc(filedata.name).set({ name: filedata.name, url: downloadURL, notes: meta })
+          docs_firestore.doc(filedata.name).set({ name: filedata.name, url: downloadURL, notes: meta, roles: roles })
         });
       }
     )
@@ -81,6 +85,26 @@ class Firebase {
   updateSeenBy = (notifId, userId) => {
     this.firestore.collection('notifs').doc(notifId).update({
       seenBy: app.firestore.FieldValue.arrayUnion(userId)
+    })
+  }
+
+  addUser = (info) => {
+    const password = info.mobilePhone
+    this.doCreateUserWithEmailAndPassword(info.email, password).then(authUser => {
+      const roles = []
+      info.userRoles.forEach(role => { roles.push(role.value) });
+      return this.firestore.collection("users").doc(authUser.user.uid).set({
+        firstName: info.firstName,
+        lastName: info.lastName,
+        birthday: info.birthday,
+        prefName: info.prefName,
+        email: info.email,
+        homePhone: info.homePhone,
+        mobilePhone: info.mobilePhone,
+        fax: info.fax,
+        address: info.address,
+        roles: roles
+      })
     })
   }
 }
