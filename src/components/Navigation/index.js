@@ -13,8 +13,7 @@ class Navigation extends React.Component {
 
   componentDidMount() {
     this.props.role.forEach(element => {
-      // TODO: Check which other roles need access to admin page
-      if (element === 'godmin') {
+      if (element === 'admin') {
         this.setState({ admin: true })
       }
     });
