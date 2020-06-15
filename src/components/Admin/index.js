@@ -41,13 +41,6 @@ class AdminPage extends React.Component {
     document.getElementById("notif").value = ''
   }
 
-  handleInput = ({ target }) => {
-    this.setState({ [target.id]: target.value })
-  }
-
-  addUser = () => {
-  }
-
   render() {
     return (
       <>
