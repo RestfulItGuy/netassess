@@ -6,7 +6,13 @@ import * as ROUTES from '../../constants/routes';
 import { withFirebase } from '../Firebase'
 
 //Create object with expected blank state to quickly reset if needed
-const INITAL_STATE = {}
+const INITAL_STATE = {
+  username: 'Greg Orchard',
+  email: 'asdf@asdf.com',
+  passwordOne: 'asdfasdf',
+  passwordTwo: 'asdfasdf',
+  error: null
+}
 
 const SignUpPage = () => (
   <div>

@@ -10,10 +10,10 @@ class Home extends React.Component {
     super(props);
     this.state = {
       uid: '',
-      role: [],
+      role: '',
       username: '',
       loading: true,
-      docs: [],
+      docs: []
     }
   }
 
@@ -23,23 +23,15 @@ class Home extends React.Component {
     this.setState({ uid: uid })
     const user = this.props.firebase.user_firestore(uid);
     user.then(vals => {
-      this.setState({ role: vals.roles, username: vals.prefName })
+      this.setState({ role: vals.role })
+      this.setState({ username: vals.username })
     })
     this.unsubscribe = this.props.firebase
       .docs_firestore()
       .onSnapshot(snapshot => {
         let docs = [];
         snapshot.forEach(doc =>
-          this.state.role.forEach(element => {
-            //If user isn't godmin
-            if (!this.state.role.includes('godmin')) {
-              if (doc.data().roles.includes(element)) {
-                docs.push({ ...doc.data(), uid: doc.id })
-              }
-            } else {
-              docs.push({ ...doc.data(), uid: doc.id })
-            }
-          })
+          docs.push({ ...doc.data(), uid: doc.id }),
         )
         this.setState({ docs, loading: false })
       })
