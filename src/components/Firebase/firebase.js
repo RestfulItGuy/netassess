@@ -89,20 +89,15 @@ class Firebase {
   }
 
   addUser = (info) => {
-    const password = info.mobilePhone
-    this.doCreateUserWithEmailAndPassword(info.email, password).then(authUser => {
+    this.doCreateUserWithEmailAndPassword(info.email, 'password').then(authUser => {
       const roles = []
-      info.userRoles.forEach(role => { roles.push(role.value) });
+      info.selectedRole.forEach(role => { roles.push(role.value) });
       return this.firestore.collection("users").doc(authUser.user.uid).set({
         firstName: info.firstName,
         lastName: info.lastName,
-        birthday: info.birthday,
-        prefName: info.prefName,
         email: info.email,
-        homePhone: info.homePhone,
-        mobilePhone: info.mobilePhone,
-        fax: info.fax,
-        address: info.address,
+        defaultContact: info.defaultContact,
+        altContact: info.altContact,
         roles: roles
       })
     })

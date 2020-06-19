@@ -1,70 +1,75 @@
 import React, { Component } from 'react'
 import Select from 'react-select'
 import { options } from '../../constants/roles'
-import { units } from '../../constants/units'
 import { withFirebase } from '../Firebase';
+
+const units = [
+  'wah',
+  'const',
+  'ss',
+  'crane'
+]
 
 class AddUser extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userRoles: [],
-      unitState: []
+      userInfo: {
+        selectedRole: { value: null },
+        firstName: null,
+        lastName: null,
+        email: null,
+        bestContact: null,
+        altContact: null,
+      }
     }
   }
 
-  handleRoleChange = userRoles => {
-    this.setState(
-      { userRoles }
-    );
-  };
-
-  handleUnitsChange = unitState => {
-    this.setState(
-      { unitState }
-    );
-  };
-
-  handleInput = ({ target }) => {
-    this.setState({ [target.id]: target.value })
+  onChangeUserInfo(event) {
+    this.setState({
+      userInfo: {
+        ...this.state.userInfo,
+        [event.target.name]: event.target.value
+      }
+    })
   }
 
+  handleRoleChange = selectedRole => {
+    this.setState({
+      userInfo: {
+        ...this.state.userInfo,
+        selectedRole
+      }
+    });
+  };
+
   addUser = () => {
-    this.props.firebase.addUser(this.state)
+    this.props.firebase.addUser(this.state.userInfo)
   }
 
   render() {
-    const { userRoles } = this.state;
-    const { unitState } = this.state;
+    const { selectedRole } = this.state;
     return (
-      <div>
+      <>
+        <h3>Add new user</h3>
         <form>
-          <span>Add user</span><br />
-          <input id="firstName" placeholder="First Name" onChange={this.handleInput} /><br />
-          <input id="lastName" placeholder="Last Name" onChange={this.handleInput} /><br />
-          <input id="birthday" placeholder="Birthday" onChange={this.handleInput} /><br />
-          <input id="prefName" placeholder="Preferred Name" onChange={this.handleInput} /><br />
-          <input id="email" placeholder="Email" onChange={this.handleInput} /><br />
-          <input id="homePhone" placeholder="Home phone" onChange={this.handleInput} /><br />
-          <input id="mobilePhone" placeholder="Mobile" onChange={this.handleInput} /><br />
-          <input id="fax" placeholder="Fax" onChange={this.handleInput} /><br />
-          <input id="address" placeholder="Address" onChange={this.handleInput} /><br />
-          <Select
-            value={userRoles}
+          <label>First Name: </label>
+          <input name="firstName" required onChange={event => this.onChangeUserInfo(event)} /><br />
+          <label>Last Name: </label>
+          <input name="lastName" required onChange={event => this.onChangeUserInfo(event)} /><br />
+          <label>Email: </label>
+          <input name="email" required onChange={event => this.onChangeUserInfo(event)} /><br />
+          <label>Best Contact: </label>
+          <input name="defaultContact" required onChange={event => this.onChangeUserInfo(event)} /><br />
+          <label>Alt. Contact: </label>
+          <input name="altContact" onChange={event => this.onChangeUserInfo(event)} /><br />
+          <Select value={selectedRole}
             onChange={this.handleRoleChange}
             options={options}
-          />
-          {this.state.userRoles.value === 'trainerAssesor' ?
-            <Select
-              value={unitState}
-              onChange={this.handleUnitsChange}
-              options={units}
-              isMulti
-            /> : console.log(false)}
-          {/*trainer pulls up list of courses they can give*/}
-          <button type="button" onClick={this.addUser}>Add user</button>
+            isMulti />
+          <button type="button" onClick={this.addUser}>Add User</button>
         </form>
-      </div>
+      </>
     )
   }
 }
