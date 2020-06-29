@@ -12,7 +12,7 @@ class Navigation extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.role === 'admin') {
+    if (this.props.role === 'godmin') {
       this.setState({ admin: true })
     }
   }

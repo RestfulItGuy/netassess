@@ -22,7 +22,10 @@ class Home extends React.Component {
     this.setState({ uid: uid })
     const user = this.props.firebase.user_firestore(uid);
     user.then(vals => {
-      this.setState({ role: vals.role })
+      console.log(vals)
+      if (vals.roles.includes("godmin")) {
+        this.setState({ role: 'godmin' })
+      }
       this.setState({ username: vals.username })
     })
     this.unsubscribe = this.props.firebase

@@ -58,7 +58,6 @@ class AdminPage extends React.Component {
               <AddUser />
               <AddTNAResource />
             </>
-
         }
       </>
     )
