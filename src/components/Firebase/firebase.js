@@ -59,12 +59,13 @@ class Firebase {
   }
 
   uploadFile = (filedata, meta, docRoles) => {
+    const path = 'docs/acsf'
     const roles = []
     docRoles.forEach(role => {
       roles.push(role.value)
     });
     const docs_firestore = this.firestore.collection('docs');
-    const uploadTask = this.storage.ref().child(`docs/` + filedata.name).put(filedata);
+    const uploadTask = this.storage.ref().child(path).child(filedata.name).put(filedata);
     uploadTask.on(app.storage.TaskEvent.STATE_CHANGED,
       null, null,
       function () {

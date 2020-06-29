@@ -20,3 +20,10 @@ export const defaultUploadRoles = [
   { value: 'complianceManager', label: "Compliance Manager" },
   { value: 'adminManager', label: "Admin Manager" },
 ]
+
+export const units = [
+  { value: 'RIIBEF201D', label: "Plan and organise work" },
+  { value: 'RIICCM201D', label: "Carry out measurements and calculations" },
+  { value: 'RIICCM203D', label: "Read and interpret plans and specifications" },
+  { value: 'RIICCM205E', label: "Carry out manual excavation" },
+]

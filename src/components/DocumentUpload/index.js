@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { withFirebase } from '../Firebase';
 import Select from 'react-select'
 
-import { options, defaultUploadRoles } from '../../constants/roles'
+import { options, defaultUploadRoles } from '../../constants/dataArrays'
+
 
 class DocumentUpload extends Component {
   constructor(props) {
@@ -21,7 +22,6 @@ class DocumentUpload extends Component {
     }
     this.uploadFile = this.uploadFile.bind(this);
   }
-
 
   handleChange = selectedOption => {
     this.setState(
@@ -111,9 +111,15 @@ class DocumentUpload extends Component {
             isMulti
             options={options}
           />
+          <Select
+            value={selectedOption}
+            onChange={this.handleChange}
+            isMulti
+            options={options}
+          />
           <button type="button" onClick={this.uploadFile}>Upload</button>
         </form>
-        <span>{this.state.error}</span>
+        {/* <span>{this.state.error}</span> */}
       </>
     )
   }

@@ -1,27 +1,23 @@
 import React, { Component } from 'react'
 import Select from 'react-select'
-import { options } from '../../constants/roles'
+import { options, units } from '../../constants/dataArrays'
 import { withFirebase } from '../Firebase';
-
-const units = [
-  'wah',
-  'const',
-  'ss',
-  'crane'
-]
 
 class AddUser extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      trainerChecked: null,
       userInfo: {
-        selectedRole: { value: null },
+        selectedRole:
+          { value: 'ceo', label: "CEO" },
         firstName: null,
         lastName: null,
         email: null,
         bestContact: null,
         altContact: null,
-      }
+      },
+      selectedUnit: {}
     }
   }
 
@@ -47,6 +43,10 @@ class AddUser extends Component {
     this.props.firebase.addUser(this.state.userInfo)
   }
 
+  handleCheck = () => {
+    this.setState({ trainerChecked: !this.state.trainerChecked })
+  }
+
   render() {
     const { selectedRole } = this.state;
     return (
@@ -67,6 +67,12 @@ class AddUser extends Component {
             onChange={this.handleRoleChange}
             options={options}
             isMulti />
+          <label>Conducts Training?</label>
+          <input type="checkbox" onChange={this.handleCheck} />
+          {this.state.trainerChecked ? <Select value={selectedRole}
+            onChange={this.handleRoleChange}
+            options={units}
+            isMulti /> : <span></span>}
           <button type="button" onClick={this.addUser}>Add User</button>
         </form>
       </>
