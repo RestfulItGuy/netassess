@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { withFirebase } from '../Firebase';
 import Select from 'react-select'
 
-import { options, defaultUploadRoles } from '../../constants/dataArrays'
-
+import { options, defaultUploadRoles } from '../../constants/roles'
 
 class DocumentUpload extends Component {
   constructor(props) {
@@ -13,8 +12,10 @@ class DocumentUpload extends Component {
       error: '',
       errorCode: '',
       textData: '',
-      filedata: null
+      filedata: null,
+      selectedOption: defaultUploadRoles
     }
+
     this.setRef = ref => {
       this.file = ref
     }
@@ -88,22 +89,21 @@ class DocumentUpload extends Component {
   }
 
   uploadFile = () => {
-    this.props.firebase.uploadFile(this.state.filedata, this.state.textData)
+    this.props.firebase.uploadFile(this.state.filedata, this.state.textData, this.state.selectedOption)
+  }
+
+  logOptions = () => {
+    console.log(this.state)
   }
 
   render() {
+    const { selectedOption } = this.state;
     return (
       <>
         <h3>Upload new document</h3>
         <form>
           <input type="file" id="upload" onChange={this.extractFileName} ref={this.setRef} /><br />
           <textarea placeholder="Notes" id="notes" onChange={this.getTextData}></textarea><br />
-          <Select
-            value={selectedOption}
-            onChange={this.handleChange}
-            isMulti
-            options={options}
-          />
           <Select
             value={selectedOption}
             onChange={this.handleChange}
