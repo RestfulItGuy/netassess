@@ -3,6 +3,8 @@ import { withFirebase } from '../Firebase';
 import Navigation from '../Navigation';
 import Loader from 'react-loader-spinner';
 import { withAuthorization } from '../Session';
+import AddUser from './AddUser';
+import AddTNAResource from './AddTNAResource';
 
 class AdminPage extends React.Component {
   constructor(props) {
@@ -20,8 +22,7 @@ class AdminPage extends React.Component {
     const userInfo = this.props.firebase.user_firestore(uid);
     this.setState({ uid: uid })
     userInfo.then(vals => {
-      this.setState({ role: vals.role, username: vals.username })
-      this.setState({ loading: false })
+      this.setState({ role: vals.roles, username: vals.username, loading: false })
     })
   }
 
@@ -54,6 +55,8 @@ class AdminPage extends React.Component {
                 <textarea id="notif" onChange={this.updateNotif}></textarea>
                 <button onClick={this.addNotif} type="button">Add notification</button>
               </form>
+              <AddUser />
+              <AddTNAResource />
             </>
 
         }

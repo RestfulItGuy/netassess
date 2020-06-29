@@ -58,9 +58,14 @@ class Firebase {
     }
   }
 
-  uploadFile = (filedata, meta) => {
+  uploadFile = (filedata, meta, docRoles) => {
+    const path = 'docs/acsf'
+    const roles = []
+    docRoles.forEach(role => {
+      roles.push(role.value)
+    });
     const docs_firestore = this.firestore.collection('docs');
-    const uploadTask = this.storage.ref().child(`docs/` + filedata.name).put(filedata);
+    const uploadTask = this.storage.ref().child(path).child(filedata.name).put(filedata);
     uploadTask.on(app.storage.TaskEvent.STATE_CHANGED,
       null, null,
       function () {
@@ -81,6 +86,21 @@ class Firebase {
   updateSeenBy = (notifId, userId) => {
     this.firestore.collection('notifs').doc(notifId).update({
       seenBy: app.firestore.FieldValue.arrayUnion(userId)
+    })
+  }
+
+  addUser = (info) => {
+    this.doCreateUserWithEmailAndPassword(info.email, 'password').then(authUser => {
+      const roles = []
+      info.selectedRole.forEach(role => { roles.push(role.value) });
+      return this.firestore.collection("users").doc(authUser.user.uid).set({
+        firstName: info.firstName,
+        lastName: info.lastName,
+        email: info.email,
+        defaultContact: info.defaultContact,
+        altContact: info.altContact,
+        roles: roles
+      })
     })
   }
 }

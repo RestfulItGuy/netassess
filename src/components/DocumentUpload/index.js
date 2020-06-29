@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import { withFirebase } from '../Firebase';
+import Select from 'react-select'
+
+import { options, defaultUploadRoles } from '../../constants/dataArrays'
+
 
 class DocumentUpload extends Component {
   constructor(props) {
@@ -16,6 +20,12 @@ class DocumentUpload extends Component {
     }
     this.uploadFile = this.uploadFile.bind(this);
   }
+
+  handleChange = selectedOption => {
+    this.setState(
+      { selectedOption }
+    );
+  };
 
   extractFileName = () => {
     // TODO: check for spelling mistakes?
@@ -88,9 +98,21 @@ class DocumentUpload extends Component {
         <form>
           <input type="file" id="upload" onChange={this.extractFileName} ref={this.setRef} /><br />
           <textarea placeholder="Notes" id="notes" onChange={this.getTextData}></textarea><br />
+          <Select
+            value={selectedOption}
+            onChange={this.handleChange}
+            isMulti
+            options={options}
+          />
+          <Select
+            value={selectedOption}
+            onChange={this.handleChange}
+            isMulti
+            options={options}
+          />
           <button type="button" onClick={this.uploadFile}>Upload</button>
         </form>
-        <span>{this.state.error}</span>
+        {/* <span>{this.state.error}</span> */}
       </>
     )
   }

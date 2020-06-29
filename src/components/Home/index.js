@@ -18,7 +18,6 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    // "string".split('').reduce((a, b) => { a = ((a << 5) - a) + b.charCodeAt(0); return a & a }, 0) }
     const uid = this.props.firebase.getUserID();
     this.setState({ uid: uid })
     const user = this.props.firebase.user_firestore(uid);
