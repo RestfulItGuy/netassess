@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withFirebase } from '../Firebase';
 import Select from 'react-select'
 
-import { options, defaultUploadRoles } from '../../constants/roles'
+import { options, defaultUploadRoles, documentCategories, acsf_SUB, activities_calender_SUB, admin_SUB } from '../../constants/dataArrays'
 
 class DocumentUpload extends Component {
   constructor(props) {
@@ -13,13 +13,32 @@ class DocumentUpload extends Component {
       errorCode: '',
       textData: '',
       filedata: null,
-      selectedOption: defaultUploadRoles
+      selectedOption: defaultUploadRoles,
+      selectedCategory: [],
+      subCategory: null
     }
 
     this.setRef = ref => {
       this.file = ref
     }
+
     this.uploadFile = this.uploadFile.bind(this);
+  }
+
+  handleCategory = selectedCategory => {
+    this.setState({
+      selectedCategory
+    })
+  }
+
+  handleSubCat = () => {
+    const subCategory = document.getElementById("subcat");
+    if (subCategory.length < 1) {
+      this.setState({ subCategory: null })
+    }
+    this.setState({
+      subCategory: subCategory.value
+    })
   }
 
   handleChange = selectedOption => {
@@ -92,24 +111,29 @@ class DocumentUpload extends Component {
     this.props.firebase.uploadFile(this.state.filedata, this.state.textData, this.state.selectedOption)
   }
 
-  logOptions = () => {
-    console.log(this.state)
-  }
-
   render() {
-    const { selectedOption } = this.state;
+    const { selectedOption, selectedCategory } = this.state;
     return (
       <>
         <h3>Upload new document</h3>
         <form>
           <input type="file" id="upload" onChange={this.extractFileName} ref={this.setRef} /><br />
           <textarea placeholder="Notes" id="notes" onChange={this.getTextData}></textarea><br />
+          <label>User roles:</label>
           <Select
             value={selectedOption}
             onChange={this.handleChange}
             isMulti
             options={options}
           />
+          <label>Document category:</label>
+          <Select
+            value={selectedCategory}
+            onChange={this.handleCategory}
+            options={documentCategories}
+          />
+          <input id="subcat" placeholder="Enter subcategory (if applicable)" onChange={this.handleSubCat} />
+          {/* get subcats associated with currently selected category */}
           <button type="button" onClick={this.uploadFile}>Upload</button>
         </form>
         {/* <span>{this.state.error}</span> */}

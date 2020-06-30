@@ -27,3 +27,9 @@ export const units = [
   { value: 'RIICCM203D', label: "Read and interpret plans and specifications" },
   { value: 'RIICCM205E', label: "Carry out manual excavation" },
 ]
+
+export const documentCategories = [
+  { value: 'acsf', label: 'acsf' },
+  { value: 'activities_calender', label: 'Activites Calender' },
+  { value: 'administration', label: 'Administration' },
+]
