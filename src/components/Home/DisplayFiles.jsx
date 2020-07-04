@@ -5,21 +5,20 @@ class DisplayFiles extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentFolder: 'root',
       docs: []
     }
   }
 
   displayFiles = () => {
     let fileArray = []
-    this.props.firebase.firestore.collection('docs').where('folder', '==', this.state.currentFolder).get().then(snapshot => {
+    this.props.firebase.firestore.collection('docs').where('folder', '==', this.props.currentFolder).get().then(snapshot => {
       snapshot.forEach(ref => {
         fileArray.push({ ...ref.data() })
       })
       this.setState({ docs: fileArray })
     })
     return this.state.docs.map(item => (
-      <li id={item.name}>{item.name}</li>
+      <><a href={item.url} id={item.name}>{item.name}</a><span> - {item.notes}</span><br /></>
     ))
   }
 

@@ -26,7 +26,7 @@ class DocumentUpload extends Component {
 
   handleChange = selectedOption => {
     this.setState(
-      { selectedOptions: selectedOption.value }
+      { selectedOption: selectedOption }
     );
   };
 
@@ -109,6 +109,7 @@ class DocumentUpload extends Component {
             value={selectedOption}
             onChange={this.handleChange}
             isMulti
+            defaultValue={defaultUploadRoles}
             options={options}
           />
           <button type="button" onClick={this.uploadFile}>Upload</button>

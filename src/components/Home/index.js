@@ -1,6 +1,7 @@
-import React from 'react'
+import React from 'react';
 import { withAuthorization } from '../Session';
 import { withFirebase } from '../Firebase';
+
 import DocumentUpload from '../DocumentUpload';
 import Loader from 'react-loader-spinner';
 import Navigation from '../Navigation';
@@ -18,9 +19,12 @@ class Home extends React.Component {
       docs: [],
       error: '',
       newFolder: '',
-      currentFolder: 'root',
-      folderStructure: []
+      currentFolder: 'root'
     }
+  }
+
+  changeFolder = (e) => {
+    this.setState({ currentFolder: e.target.id })
   }
 
   componentDidMount() {
@@ -79,10 +83,8 @@ class Home extends React.Component {
             </form>
             <DocumentUpload uid={this.state.uid} currentFolder={this.state.currentFolder} />
             <div id="folderUI">
-              <DisplayFolders />
-              <DisplayFiles />
-              {/* {this.displayFolders()}
-              {this.displayFiles()} */}
+              <DisplayFolders currentFolder={this.state.currentFolder} changeFolder={this.changeFolder} />
+              <DisplayFiles currentFolder={this.state.currentFolder} />
             </div>
             {this.state.error}
           </>
@@ -91,6 +93,7 @@ class Home extends React.Component {
     )
   }
 }
+
 
 const condition = authUser => !!authUser;
 export default withFirebase(withAuthorization(condition)(Home));
