@@ -58,7 +58,7 @@ class Firebase {
     }
   }
 
-  uploadFile = (filedata, meta, docRoles) => {
+  uploadFile = (filedata, meta, docRoles, currentFolder) => {
     const roles = []
     docRoles.forEach(role => {
       roles.push(role.value)
@@ -69,10 +69,16 @@ class Firebase {
       null, null,
       function () {
         uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
-          docs_firestore.doc(filedata.name).set({ name: filedata.name, url: downloadURL, notes: meta, roles: roles })
+          docs_firestore.add({ name: filedata.name, url: downloadURL, notes: meta, roles: roles, folder: currentFolder })
         });
       }
     )
+  }
+
+  uploadFile_STATE = (data) => {
+    const docs_firestore = this.firestore.collection('docs');
+    data.filedata = null;
+    docs_firestore.doc('fdsa').set(data)
   }
 
   addNotif = (notif, user) => {
@@ -101,6 +107,10 @@ class Firebase {
         roles: roles
       })
     })
+  }
+
+  newfolder = (newFolder, currentFolder) => {
+    return this.firestore.collection('folderStructure').add({ folder: newFolder, root: currentFolder })
   }
 }
 

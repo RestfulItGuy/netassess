@@ -6,6 +6,8 @@ const path = require('path');
 const url = require('url');
 const log = require('electron-log');
 
+require('react-devtools-electron')
+
 //Setup logging
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
@@ -56,6 +58,7 @@ function createWindow() {
       label: 'Having trouble?',
       submenu: [
         { role: 'forcereload' },
+        { role: 'toggledevtools' },
       ]
     }
   ]
@@ -97,6 +100,7 @@ autoUpdater.on('error', (error) => {
 
 app.on('ready', createWindow);
 app.on('ready', function () {
+
   autoUpdater.checkForUpdatesAndNotify();
 });
 

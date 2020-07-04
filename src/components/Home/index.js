@@ -4,6 +4,8 @@ import { withFirebase } from '../Firebase';
 import DocumentUpload from '../DocumentUpload';
 import Loader from 'react-loader-spinner';
 import Navigation from '../Navigation';
+import DisplayFolders from './DisplayFolders';
+import DisplayFiles from './DisplayFiles';
 
 class Home extends React.Component {
   constructor(props) {
@@ -13,7 +15,11 @@ class Home extends React.Component {
       role: '',
       username: '',
       loading: true,
-      docs: []
+      docs: [],
+      error: '',
+      newFolder: '',
+      currentFolder: 'root',
+      folderStructure: []
     }
   }
 
@@ -32,6 +38,9 @@ class Home extends React.Component {
       .docs_firestore()
       .onSnapshot(snapshot => {
         let docs = [];
+        if (snapshot.empty) {
+          this.setState({ error: "No documents. Upload one or create a folder" })
+        }
         snapshot.forEach(doc =>
           docs.push({ ...doc.data(), uid: doc.id }),
         )
@@ -42,6 +51,13 @@ class Home extends React.Component {
   componentWillUnmount() {
     this.unsubscribe();
   }
+
+  newFolder = () => {
+    const newFolder = document.getElementById("newFolder");
+    this.props.firebase.newfolder(newFolder.value, this.state.currentFolder)
+    newFolder.value = ''
+  }
+
 
   render() {
     return (
@@ -56,14 +72,19 @@ class Home extends React.Component {
           <>
             <Navigation role={this.state.role} />
             <h1>Welcome, {this.state.username}</h1>
-            <DocumentUpload uid={this.state.uid} />
-            <ul id="docsList">
-              {
-                this.state.docs.map(item => (
-                  <li key={item.uid}><a href={item.url}>{item.name}</a><br /><span>{item.notes}</span></li>
-                ))
-              }
-            </ul>
+            <form>
+              <h3>Add folder</h3>
+              <input id="newFolder" />
+              <button type="button" onClick={this.newFolder}>Add folder</button>
+            </form>
+            <DocumentUpload uid={this.state.uid} currentFolder={this.state.currentFolder} />
+            <div id="folderUI">
+              <DisplayFolders />
+              <DisplayFiles />
+              {/* {this.displayFolders()}
+              {this.displayFiles()} */}
+            </div>
+            {this.state.error}
           </>
         }
       </>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withFirebase } from '../Firebase';
 import Select from 'react-select'
 
-import { options, defaultUploadRoles, documentCategories, acsf_SUB, activities_calender_SUB, admin_SUB } from '../../constants/dataArrays'
+import { options, defaultUploadRoles } from '../../constants/dataArrays'
 
 class DocumentUpload extends Component {
   constructor(props) {
@@ -14,8 +14,7 @@ class DocumentUpload extends Component {
       textData: '',
       filedata: null,
       selectedOption: defaultUploadRoles,
-      selectedCategory: [],
-      subCategory: null
+      fullPath: null
     }
 
     this.setRef = ref => {
@@ -25,25 +24,9 @@ class DocumentUpload extends Component {
     this.uploadFile = this.uploadFile.bind(this);
   }
 
-  handleCategory = selectedCategory => {
-    this.setState({
-      selectedCategory
-    })
-  }
-
-  handleSubCat = () => {
-    const subCategory = document.getElementById("subcat");
-    if (subCategory.length < 1) {
-      this.setState({ subCategory: null })
-    }
-    this.setState({
-      subCategory: subCategory.value
-    })
-  }
-
   handleChange = selectedOption => {
     this.setState(
-      { selectedOption }
+      { selectedOptions: selectedOption.value }
     );
   };
 
@@ -99,6 +82,7 @@ class DocumentUpload extends Component {
       console.log(valid)
     }
     const file = this.file.files[0]
+    this.setState({ fullPath: this.file.files[0].path })
     this.setState({ filedata: file })
   }
 
@@ -108,16 +92,17 @@ class DocumentUpload extends Component {
   }
 
   uploadFile = () => {
-    this.props.firebase.uploadFile(this.state.filedata, this.state.textData, this.state.selectedOption)
+    this.props.firebase.uploadFile(this.state.filedata, this.state.textData, this.state.selectedOption, this.props.currentFolder)
   }
 
   render() {
-    const { selectedOption, selectedCategory } = this.state;
+    const { selectedOption } = this.state;
     return (
       <>
         <h3>Upload new document</h3>
         <form>
           <input type="file" id="upload" onChange={this.extractFileName} ref={this.setRef} /><br />
+          <input type="hidden" id="currentFolder" value={this.props.currentFolder} />
           <textarea placeholder="Notes" id="notes" onChange={this.getTextData}></textarea><br />
           <label>User roles:</label>
           <Select
@@ -126,19 +111,11 @@ class DocumentUpload extends Component {
             isMulti
             options={options}
           />
-          <label>Document category:</label>
-          <Select
-            value={selectedCategory}
-            onChange={this.handleCategory}
-            options={documentCategories}
-          />
-          <input id="subcat" placeholder="Enter subcategory (if applicable)" onChange={this.handleSubCat} />
-          {/* get subcats associated with currently selected category */}
           <button type="button" onClick={this.uploadFile}>Upload</button>
         </form>
-        {/* <span>{this.state.error}</span> */}
       </>
     )
   }
 }
+
 export default withFirebase(DocumentUpload);
