@@ -1,5 +1,5 @@
 const { app, BrowserWindow, ipcMain, protocol, Menu } = require('electron');
-const { channels } = require('../src/shared/constants');
+//const { channels } = require('../src/shared/constants');
 const { autoUpdater } = require('electron-updater');
 
 const path = require('path');
@@ -116,9 +116,9 @@ app.on('activate', function () {
   }
 });
 
-ipcMain.on(channels.APP_INFO, (event) => {
-  event.sender.send(channels.APP_INFO, {
-    appName: app.getName(),
-    appVersion: app.getVersion(),
-  });
-});
+// ipcMain.on(channels.APP_INFO, (event) => {
+//   event.sender.send(channels.APP_INFO, {
+//     appName: app.getName(),
+//     appVersion: app.getVersion(),
+//   });
+// });
