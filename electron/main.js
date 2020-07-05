@@ -1,5 +1,5 @@
 const { app, BrowserWindow, ipcMain, protocol, Menu } = require('electron');
-//const { channels } = require('../src/shared/constants');
+const { channels } = require('../src/shared/constants');
 const { autoUpdater } = require('electron-updater');
 
 const path = require('path');
@@ -31,9 +31,6 @@ function createWindow() {
   mainWindow.loadURL(startUrl);
   mainWindow.on('closed', function () {
     mainWindow = null;
-  });
-  mainWindow.once('ready-to-show', () => {
-    autoUpdater.checkForUpdatesAndNotify();
   });
 
   const isMac = process.platform === 'darwin'
@@ -100,7 +97,6 @@ autoUpdater.on('error', (error) => {
 
 app.on('ready', createWindow);
 app.on('ready', function () {
-
   autoUpdater.checkForUpdatesAndNotify();
 });
 
@@ -116,9 +112,9 @@ app.on('activate', function () {
   }
 });
 
-// ipcMain.on(channels.APP_INFO, (event) => {
-//   event.sender.send(channels.APP_INFO, {
-//     appName: app.getName(),
-//     appVersion: app.getVersion(),
-//   });
-// });
+ipcMain.on(channels.APP_INFO, (event) => {
+  event.sender.send(channels.APP_INFO, {
+    appName: app.getName(),
+    appVersion: app.getVersion(),
+  });
+});
