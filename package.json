@@ -1,7 +1,7 @@
 {
   "name": "netassess",
   "packageName": "netassess",
-  "version": "0.0.3",
+  "version": "0.0.7",
   "private": true,
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
     "react-devtools-electron": "^4.7.0",
     "react-dom": "^16.6.3",
     "react-loader-spinner": "^3.1.14",
-    "react-router-dom": "^5.1.2",
+    "react-router-dom": "4.3.1",
     "react-scripts": "3.1.0",
     "react-select": "^3.1.0",
     "recompose": "^0.30.0"

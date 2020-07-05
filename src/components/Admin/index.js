@@ -4,7 +4,7 @@ import Navigation from '../Navigation';
 import Loader from 'react-loader-spinner';
 import { withAuthorization } from '../Session';
 import AddUser from './AddUser';
-import AddTNAResource from './AddTNAResource';
+//import AddTNAResource from './AddTNAResource';
 
 class AdminPage extends React.Component {
   constructor(props) {
@@ -56,7 +56,7 @@ class AdminPage extends React.Component {
                 <button onClick={this.addNotif} type="button">Add notification</button>
               </form>
               <AddUser />
-              <AddTNAResource />
+              {/* <AddTNAResource /> */}
             </>
         }
       </>
