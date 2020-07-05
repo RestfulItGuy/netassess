@@ -8,12 +8,18 @@ import App from './components/App';
 import Firebase, { FirebaseContext } from './components/Firebase';
 import { UserProvider } from './components/context/UserContext';
 
+import {
+  RecoilRoot
+} from 'recoil';
+
 import "../node_modules/react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 
 ReactDOM.render(
   <FirebaseContext.Provider value={new Firebase()}>
     <UserProvider>
-      <App />
+      <RecoilRoot>
+        <App />
+      </RecoilRoot>
     </UserProvider>
   </FirebaseContext.Provider>,
   document.getElementById('root'),

@@ -24,6 +24,7 @@
     "react-router-dom": "4.3.1",
     "react-scripts": "3.1.0",
     "react-select": "^3.1.0",
+    "recoil": "^0.0.10",
     "recompose": "^0.30.0"
   },
   "main": "electron/main.js",

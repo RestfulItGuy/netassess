@@ -4,14 +4,15 @@ import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
-const Landing = () => (
-  <div>
-    <div className="titleContainer">
-      <h1 className="title">Welcome to TICC</h1>
-    </div>
-    <SignInForm />
-  </div>
-);
+const Landing = () => {
+  return (
+    <div>
+      <div className="titleContainer">
+        <h1 className="title">Welcome to TICC</h1>
+      </div>
+      <SignInForm />
+    </div>);
+};
 const INITIAL_STATE = {
   email: 'braedeno@outlook.com',
   password: 'asdfasdf',
@@ -40,6 +41,7 @@ class SignInFormBase extends Component {
   };
   render() {
     const { email, password, error } = this.state;
+
     return (
       <form onSubmit={this.onSubmit} className="loginForm">
         <input
