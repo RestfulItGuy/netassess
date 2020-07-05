@@ -1,8 +1,7 @@
 {
   "name": "netassess",
   "packageName": "netassess",
-  "version": "v0.0.8-alpha",
-  "private": true,
+  "version": "0.0.11-alpha",
   "repository": {
     "type": "git",
     "url": "https://github.com/RestfulItGuy/netassess.git"
