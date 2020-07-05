@@ -28,7 +28,7 @@ export default function Footer() {
   })
   return (
     <>
-      <span className="footer">{packageJson.version} | {electron_message} | 2020</span>
+      <span className="footer">{packageJson.version} | {electron_message} | C 2020</span>
     </>
   )
 }
