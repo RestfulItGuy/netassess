@@ -22,7 +22,10 @@ class AdminPage extends React.Component {
     const userInfo = this.props.firebase.user_firestore(uid);
     this.setState({ uid: uid })
     userInfo.then(vals => {
-      this.setState({ role: vals.roles, username: vals.username, loading: false })
+      if (vals.roles.includes("godmin")) {
+        this.setState({ role: 'godmin' })
+      }
+      this.setState({ username: vals.username, loading: false })
     })
   }
 

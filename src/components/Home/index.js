@@ -32,7 +32,6 @@ class Home extends React.Component {
     this.setState({ uid: uid })
     const user = this.props.firebase.user_firestore(uid);
     user.then(vals => {
-      console.log(vals)
       if (vals.roles.includes("godmin")) {
         this.setState({ role: 'godmin' })
       }

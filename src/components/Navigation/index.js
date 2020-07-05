@@ -30,9 +30,6 @@ const NavigationNonAdmin = () => (
           <Link to={ROUTES.PROFILE}>Home</Link>
         </li>
         <li>
-          <Link to={ROUTES.ACCOUNT}>Account</Link>
-        </li>
-        <li>
           <SignOutButton />
         </li>
       </ul>
@@ -47,9 +44,6 @@ const NavigationAdmin = () => (
       <ul>
         <li>
           <Link to={ROUTES.PROFILE}>Home</Link>
-        </li>
-        <li>
-          <Link to={ROUTES.ACCOUNT}>Account</Link>
         </li>
         <li>
           <Link to={ROUTES.ADMIN}>Admin</Link>

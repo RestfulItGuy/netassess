@@ -48,3 +48,9 @@ width: 50% !important;
 a{
   color: azure;
 }
+
+.footer{
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+}

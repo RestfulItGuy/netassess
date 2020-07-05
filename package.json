@@ -1,7 +1,7 @@
 {
   "name": "netassess",
   "packageName": "netassess",
-  "version": "0.0.7",
+  "version": "v0.0.7-alpha",
   "private": true,
   "repository": {
     "type": "git",

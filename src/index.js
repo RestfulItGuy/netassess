@@ -6,7 +6,6 @@ import * as serviceWorker from './serviceWorker';
 
 import App from './components/App';
 import Firebase, { FirebaseContext } from './components/Firebase';
-import { UserProvider } from './components/context/UserContext';
 
 import {
   RecoilRoot
@@ -16,11 +15,9 @@ import "../node_modules/react-loader-spinner/dist/loader/css/react-spinner-loade
 
 ReactDOM.render(
   <FirebaseContext.Provider value={new Firebase()}>
-    <UserProvider>
-      <RecoilRoot>
-        <App />
-      </RecoilRoot>
-    </UserProvider>
+    <RecoilRoot>
+      <App />
+    </RecoilRoot>
   </FirebaseContext.Provider>,
   document.getElementById('root'),
 );

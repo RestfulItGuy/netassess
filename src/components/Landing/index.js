@@ -4,6 +4,8 @@ import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
+import Footer from '../Footer'
+
 const Landing = () => {
   return (
     <div>
@@ -43,28 +45,31 @@ class SignInFormBase extends Component {
     const { email, password, error } = this.state;
 
     return (
-      <form onSubmit={this.onSubmit} className="loginForm">
-        <input
-          name="email"
-          value={email}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Email Address"
-          className="textInput"
-        />
-        <input
-          name="password"
-          value={password}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Password"
-          className="textInput"
-        />
-        <button className="submitButton" type="submit">
-          Sign In
+      <>
+        <form onSubmit={this.onSubmit} className="loginForm">
+          <input
+            name="email"
+            value={email}
+            onChange={this.onChange}
+            type="text"
+            placeholder="Email Address"
+            className="textInput"
+          />
+          <input
+            name="password"
+            value={password}
+            onChange={this.onChange}
+            type="password"
+            placeholder="Password"
+            className="textInput"
+          />
+          <button className="submitButton" type="submit">
+            Sign In
         </button>
-        {error && <p>{error.message}</p>}
-      </form>
+          {error && <p>{error.message}</p>}
+        </form>
+        <Footer />
+      </>
     );
   }
 }
