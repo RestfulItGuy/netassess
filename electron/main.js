@@ -80,7 +80,7 @@ autoUpdater.on('update-available', (info) => {
 })
 
 autoUpdater.on('update-not-available', (info) => {
-  sendStatusToMainWindow('Update not available');
+  //sendStatusToMainWindow('Update not available');
   mainWindow.webContents.send('update-not-available', "Update not available");
 })
 
