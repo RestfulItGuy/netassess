@@ -11,10 +11,10 @@ class AddUser extends Component {
       userInfo: {
         selectedRole:
           { value: 'ceo', label: "CEO" },
-        firstName: null,
-        lastName: null,
-        email: null,
-        bestContact: null,
+        firstName: 'test',
+        lastName: 'dc',
+        email: 'dc@ticc.com',
+        bestContact: '0468359479',
         altContact: null,
       },
       selectedUnit: {}
@@ -60,15 +60,15 @@ class AddUser extends Component {
           <label>Email: </label>
           <input name="email" required onChange={event => this.onChangeUserInfo(event)} /><br />
           <label>Best Contact: </label>
-          <input name="defaultContact" required onChange={event => this.onChangeUserInfo(event)} /><br />
+          <input name="bestContact" required onChange={event => this.onChangeUserInfo(event)} /><br />
           <label>Alt. Contact: </label>
           <input name="altContact" onChange={event => this.onChangeUserInfo(event)} /><br />
           <Select value={selectedRole}
             onChange={this.handleRoleChange}
             options={options}
             isMulti />
-          <label>Conducts Training?</label>
-          <input type="checkbox" onChange={this.handleCheck} />
+          {/* <label>Conducts Training?</label>
+          <input type="checkbox" onChange={this.handleCheck} /> */}
           {this.state.trainerChecked ? <Select value={selectedRole}
             onChange={this.handleRoleChange}
             options={units}

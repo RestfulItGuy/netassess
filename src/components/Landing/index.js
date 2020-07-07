@@ -16,7 +16,7 @@ const Landing = () => {
     </div>);
 };
 const INITIAL_STATE = {
-  email: 'braedeno@outlook.com',
+  email: 'admin@netassess.com.au',
   password: 'asdfasdf',
   error: null,
 };

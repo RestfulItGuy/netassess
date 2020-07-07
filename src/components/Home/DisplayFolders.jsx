@@ -9,16 +9,19 @@ class DisplayFolders extends React.Component {
     }
   }
 
+  deleteFolder = () => {
+  }
+
   displayFolders = () => {
     let folderArray = []
     this.props.firebase.firestore.collection('folderStructure').where('root', '==', this.props.currentFolder).get().then(snapshot => {
       snapshot.forEach(ref => {
-        folderArray.push({ ...ref.data() })
+        folderArray.push({ id: ref.id, ...ref.data() })
       })
       this.setState({ folderStructure: folderArray })
     })
     return this.state.folderStructure.map(item => (
-      <li id={item.folder} onClick={this.props.changeFolder}>{item.folder}</li>
+      <li key={item.id} id={item.id} onClick={this.props.changeFolder}>{item.folder} <span className="deleteButton" id={item.id} onClick={this.deleteFolder}>Delete Folder?</span></li>
     ))
   }
 

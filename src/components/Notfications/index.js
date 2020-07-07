@@ -22,7 +22,6 @@ class Notifications extends Component {
       .onSnapshot(snapshot => {
         let notifs = [];
         snapshot.forEach(doc => {
-          console.log("Seen by: " + doc.data().seenBy)
           if (!doc.data().seenBy.includes(this.state.uid)) {
             notifs.push({ ...doc.data(), uid: doc.id })
           }

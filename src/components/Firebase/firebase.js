@@ -4,17 +4,29 @@ import 'firebase/database';
 import 'firebase/firestore';
 import 'firebase/storage';
 
-//.env config
+//production config
+// const firebaseConfig = {
+//   apiKey: "AIzaSyAqGiaRxBJCMR8AiHiYyFHdImH-kQweCWY",
+//   authDomain: "netassess-337d0.firebaseapp.com",
+//   databaseURL: "https://netassess-337d0.firebaseio.com",
+//   projectId: "netassess-337d0",
+//   storageBucket: "netassess-337d0.appspot.com",
+//   messagingSenderId: "146418653876",
+//   appId: "1:146418653876:web:e155d14f6fe83ac1c155e1",
+//   measurementId: "G-5P6J4Z2ELS"
+// };
+
+//test config
 const firebaseConfig = {
-  apiKey: "AIzaSyAqGiaRxBJCMR8AiHiYyFHdImH-kQweCWY",
-  authDomain: "netassess-337d0.firebaseapp.com",
-  databaseURL: "https://netassess-337d0.firebaseio.com",
-  projectId: "netassess-337d0",
-  storageBucket: "netassess-337d0.appspot.com",
-  messagingSenderId: "146418653876",
-  appId: "1:146418653876:web:e155d14f6fe83ac1c155e1",
-  measurementId: "G-5P6J4Z2ELS"
-};
+  apiKey: "AIzaSyA7utCvt2GjvOKHutwWGvI0OxQSGGHuz_c",
+  authDomain: "testfirebase-85393.firebaseapp.com",
+  databaseURL: "https://testfirebase-85393.firebaseio.com",
+  projectId: "testfirebase-85393",
+  storageBucket: "testfirebase-85393.appspot.com",
+  messagingSenderId: "833817206190",
+  appId: "1:833817206190:web:c6f92e36fe8144d5ff3c3f"
+
+}
 
 class Firebase {
   constructor() {
@@ -102,7 +114,7 @@ class Firebase {
         firstName: info.firstName,
         lastName: info.lastName,
         email: info.email,
-        defaultContact: info.defaultContact,
+        bestContact: info.bestContact,
         altContact: info.altContact,
         roles: roles
       })
@@ -111,6 +123,17 @@ class Firebase {
 
   newfolder = (newFolder, currentFolder) => {
     return this.firestore.collection('folderStructure').add({ folder: newFolder, root: currentFolder })
+  }
+
+  deleteFolder = (id) => {
+    //Get folder id
+    //Get id array of all subfolders
+    //Get id array of all docs in folder
+    //Get id array of all docs in subfolders
+    //Merge folder ids into one array
+    //foreach folder array delete by doc id
+    //Merge doc ids into one array
+    //foreach doc array delete by doc id
   }
 }
 

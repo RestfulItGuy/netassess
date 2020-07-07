@@ -54,3 +54,8 @@ a{
   bottom: 5px;
   right: 5px;
 }
+
+.deleteButton{
+  color: red;
+  text-decoration: underline;
+}
